@@ -19,14 +19,19 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
 
-
-
     def run_game(self):
         """Start the main loop for the game"""
         while True:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+
+            # Get rid of bullets that have dissapeared.
+            for bullet in self.bullets.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            print(len(self.bullets))
+
             self._update_screen()
             self.clock.tick(60)
 
